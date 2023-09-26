@@ -6,12 +6,14 @@ import { ICalculatorModel } from '../interfaces/calculator-model.interface';
 
 export class CalculatorModel implements ICalculatorModel {
 
+  private _buffer: string = '';
+
   public pressNumericKey(key: NumericKeys): void {
-    throw new Error('Method not implemented.');
+    this._buffer += key;
   }
 
   public pressOperatorKey(key: OperatorKeys): void {
-    throw new Error('Method not implemented.');
+    this._buffer += key;
   }
 
   public pressActionKey(key: ActionKeys): void {
@@ -19,7 +21,7 @@ export class CalculatorModel implements ICalculatorModel {
   }
 
   public display(): string {
-    throw new Error('Method not implemented.');
+    return this._buffer;
   }
 
 }
