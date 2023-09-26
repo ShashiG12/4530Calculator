@@ -2,6 +2,7 @@ import { CalculatorModel } from './calculator.model';
 import { ICalculatorModel } from '../interfaces/calculator-model.interface';
 import { NumericKeys } from '../enums/numeric-keys.enum';
 import { OperatorKeys } from '../enums/operator-keys.enum';
+import { ActionKeys } from '../enums/action-keys.enum';
 
 describe('CalculatorModel', (): void => {
 
@@ -115,6 +116,16 @@ describe('CalculatorModel', (): void => {
     const displayValue: string = calculator.display();
 
     expect(displayValue).toEqual('2/3');
+  });
+
+  it('should display `5` when the `2+3=` keys have been pressed', (): void => {
+    calculator.pressNumericKey(NumericKeys.TWO);
+    calculator.pressOperatorKey(OperatorKeys.PLUS);
+    calculator.pressNumericKey(NumericKeys.THREE);
+    calculator.pressActionKey(ActionKeys.EQUALS);
+    const displayValue: string = calculator.display();
+
+    expect(displayValue).toEqual('5');
   });
 
 });
