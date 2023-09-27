@@ -17,7 +17,17 @@ export class CalculatorModel implements ICalculatorModel {
   }
 
   public pressActionKey(key: ActionKeys): void {
-    throw new Error('Method not implemented.');
+    switch (key) {
+      case ActionKeys.CLEAR:
+        this._buffer = '';
+        break;
+      case ActionKeys.DOT:
+        break;
+      case ActionKeys.EQUALS:
+        break;
+      default:
+        break;
+    }
   }
 
   public display(): string {

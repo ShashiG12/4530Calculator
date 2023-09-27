@@ -128,4 +128,58 @@ describe('CalculatorModel', (): void => {
     expect(displayValue).toEqual('5');
   });
 
+  it('should display `-1` when the `2-3=` keys have been pressed', (): void => {
+    calculator.pressNumericKey(NumericKeys.TWO);
+    calculator.pressOperatorKey(OperatorKeys.MINUS);
+    calculator.pressNumericKey(NumericKeys.THREE);
+    calculator.pressActionKey(ActionKeys.EQUALS);
+    const displayValue: string = calculator.display();
+
+    expect(displayValue).toEqual('-1');
+  });
+
+  it('should display `6` when the `2*3=` keys have been pressed', (): void => {
+    calculator.pressNumericKey(NumericKeys.TWO);
+    calculator.pressOperatorKey(OperatorKeys.MULT);
+    calculator.pressNumericKey(NumericKeys.THREE);
+    calculator.pressActionKey(ActionKeys.EQUALS);
+    const displayValue: string = calculator.display();
+
+    expect(displayValue).toEqual('6');
+  });
+
+  it('should display `3` when the `6/2=` keys have been pressed', (): void => {
+    calculator.pressNumericKey(NumericKeys.SIX);
+    calculator.pressOperatorKey(OperatorKeys.DIV);
+    calculator.pressNumericKey(NumericKeys.TWO);
+    calculator.pressActionKey(ActionKeys.EQUALS);
+    const displayValue: string = calculator.display();
+
+    expect(displayValue).toEqual('3');
+  });
+
+  it('multiple operations: should display `4` when the `2+3-1=` keys have been pressed', (): void => {
+    calculator.pressNumericKey(NumericKeys.TWO);
+    calculator.pressOperatorKey(OperatorKeys.PLUS);
+    calculator.pressNumericKey(NumericKeys.THREE);
+    calculator.pressOperatorKey(OperatorKeys.MINUS);
+    calculator.pressNumericKey(NumericKeys.ONE);
+    calculator.pressActionKey(ActionKeys.EQUALS);
+    const displayValue: string = calculator.display();
+
+    expect(displayValue).toEqual('4');
+  });
+
+  it('multiple operations: should display `1` when the `2*3/6=` keys have been pressed', (): void => {
+    calculator.pressNumericKey(NumericKeys.TWO);
+    calculator.pressOperatorKey(OperatorKeys.MULT);
+    calculator.pressNumericKey(NumericKeys.THREE);
+    calculator.pressOperatorKey(OperatorKeys.DIV);
+    calculator.pressNumericKey(NumericKeys.SIX);
+    calculator.pressActionKey(ActionKeys.EQUALS);
+    const displayValue: string = calculator.display();
+
+    expect(displayValue).toEqual('1');
+  });
+
 });
