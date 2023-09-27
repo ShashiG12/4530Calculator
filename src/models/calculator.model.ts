@@ -22,6 +22,7 @@ export class CalculatorModel implements ICalculatorModel {
         this._buffer = '';
         break;
       case ActionKeys.DOT:
+        this._buffer = '.';
         break;
       case ActionKeys.EQUALS:
         break;
