@@ -25,6 +25,7 @@ export class CalculatorModel implements ICalculatorModel {
         this._buffer = '.';
         break;
       case ActionKeys.EQUALS:
+        
         break;
       default:
         break;
@@ -33,6 +34,23 @@ export class CalculatorModel implements ICalculatorModel {
 
   public display(): string {
     return this._buffer;
+  }
+
+  private operation(num1: String, operator: String, num2: String): String {
+    const first: number  = Number(num1);
+    const second: number = Number(num2);
+    switch (operator) {
+      case '+':
+        return String(first + second);
+      case '-':
+        return String(first - second);
+      case '*':
+        return String(first * second);
+      case '/':
+        return String(first / second);
+      default:
+        break;
+    }
   }
 
 }
