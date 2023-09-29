@@ -25,7 +25,7 @@ export class CalculatorModel implements ICalculatorModel {
         this._buffer = '.';
         break;
       case ActionKeys.EQUALS:
-        
+        let first: number = '';
         break;
       default:
         break;
