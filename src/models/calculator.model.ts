@@ -25,8 +25,46 @@ export class CalculatorModel implements ICalculatorModel {
         this._buffer = '.';
         break;
       case ActionKeys.EQUALS:
-        let first: number = '';
-        break;
+        // let currentTotal : number = 0;
+        // let index : number = 0
+        // let firstNum : string = ''
+        // let secondNum : string = ''
+        // let operator : string = ''
+        // while (this._buffer[index]) {
+        //   if (index == 0) {
+        //     while (!isNaN(Number(this._buffer[index]))) {
+        //       firstNum += this._buffer[index]
+        //       index++
+        //     }
+        //   }
+        //   else {
+        //     firstNum = String(currentTotal)
+        //   }
+        //   operator = this._buffer[index]
+        //   index++
+        //   while (!isNaN(Number(this._buffer[index]))) {
+        //     secondNum += this._buffer[index]
+        //     index++
+        //   }
+        //   console.log(this._buffer[index])
+        //   switch (operator) {
+        //     case '+':
+        //       currentTotal += parseInt(firstNum) + parseInt(secondNum)
+        //       break;
+        //     case '-':
+        //       currentTotal += parseInt(firstNum) - parseInt(secondNum)
+        //       break;
+        //     case '*':
+        //       currentTotal += parseInt(firstNum) * parseInt(secondNum)
+        //       break;
+        //     case '/':
+        //       console.log(firstNum, secondNum)
+        //       currentTotal += parseInt(firstNum) / parseInt(secondNum)
+        //       break;
+        //   }
+        // }
+        // this._buffer = String(currentTotal)
+       
       default:
         break;
     }
@@ -34,6 +72,16 @@ export class CalculatorModel implements ICalculatorModel {
 
   public display(): string {
     return this._buffer;
+  }
+
+  private hasPrecedence(op1: string, op2: string): boolean {
+    const precedenceMap: { [key: string]: number } = {
+      '+': 1,
+      '-': 1,
+      '*': 2,
+      '/': 2,
+    };
+    return precedenceMap[op1] <= precedenceMap[op2];
   }
 
   private operation(num1: String, operator: String, num2: String): String {
