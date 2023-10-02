@@ -1,4 +1,3 @@
-
 import { ActionKeys } from '../enums/action-keys.enum';
 import { NumericKeys } from '../enums/numeric-keys.enum';
 import { OperatorKeys } from '../enums/operator-keys.enum';
@@ -25,45 +24,6 @@ export class CalculatorModel implements ICalculatorModel {
         this._buffer = '.';
         break;
       case ActionKeys.EQUALS:
-        // let currentTotal : number = 0;
-        // let index : number = 0
-        // let firstNum : string = ''
-        // let secondNum : string = ''
-        // let operator : string = ''
-        // while (this._buffer[index]) {
-        //   if (index == 0) {
-        //     while (!isNaN(Number(this._buffer[index]))) {
-        //       firstNum += this._buffer[index]
-        //       index++
-        //     }
-        //   }
-        //   else {
-        //     firstNum = String(currentTotal)
-        //   }
-        //   operator = this._buffer[index]
-        //   index++
-        //   while (!isNaN(Number(this._buffer[index]))) {
-        //     secondNum += this._buffer[index]
-        //     index++
-        //   }
-        //   console.log(this._buffer[index])
-        //   switch (operator) {
-        //     case '+':
-        //       currentTotal += parseInt(firstNum) + parseInt(secondNum)
-        //       break;
-        //     case '-':
-        //       currentTotal += parseInt(firstNum) - parseInt(secondNum)
-        //       break;
-        //     case '*':
-        //       currentTotal += parseInt(firstNum) * parseInt(secondNum)
-        //       break;
-        //     case '/':
-        //       console.log(firstNum, secondNum)
-        //       currentTotal += parseInt(firstNum) / parseInt(secondNum)
-        //       break;
-        //   }
-        // }
-        // this._buffer = String(currentTotal)
         const operators: string[] = [];
         const operands: number[] = [];
         let currentOperand: string = '';
@@ -118,7 +78,6 @@ export class CalculatorModel implements ICalculatorModel {
           }
         }
         this._buffer = String(operands[0])
-       
       default:
         break;
     }
@@ -136,23 +95,6 @@ export class CalculatorModel implements ICalculatorModel {
       '/': 2,
     };
     return precedenceDict[op1] <= precedenceDict[op2];
-  }
-
-  private operation(num1: String, operator: String, num2: String): String {
-    const first: number  = Number(num1);
-    const second: number = Number(num2);
-    switch (operator) {
-      case '+':
-        return String(first + second);
-      case '-':
-        return String(first - second);
-      case '*':
-        return String(first * second);
-      case '/':
-        return String(first / second);
-      default:
-        break;
-    }
   }
 
 }
