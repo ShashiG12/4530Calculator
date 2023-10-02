@@ -182,4 +182,29 @@ describe('CalculatorModel', (): void => {
     expect(displayValue).toEqual('1');
   });
 
+  it('CalculatorModel should display `5` when equals is clicked on `15 - 10`', (): void => {
+    calculator.pressNumericKey(NumericKeys.ONE);
+    calculator.pressNumericKey(NumericKeys.FIVE);
+    calculator.pressOperatorKey(OperatorKeys.MINUS);
+    calculator.pressNumericKey(NumericKeys.ONE);
+    calculator.pressNumericKey(NumericKeys.ZERO);
+    calculator.pressActionKey(ActionKeys.EQUALS);
+    const displayValue: string = calculator.display();
+
+    expect(displayValue).toEqual('5');
+  });
+
+  it('CalculatorModel should display `12` when equals is clicked on `144 / 12`', (): void => {
+    calculator.pressNumericKey(NumericKeys.ONE);
+    calculator.pressNumericKey(NumericKeys.FOUR);
+    calculator.pressNumericKey(NumericKeys.FOUR);
+    calculator.pressOperatorKey(OperatorKeys.DIV);
+    calculator.pressNumericKey(NumericKeys.ONE);
+    calculator.pressNumericKey(NumericKeys.TWO);
+    calculator.pressActionKey(ActionKeys.EQUALS);
+    const displayValue: string = calculator.display();
+
+    expect(displayValue).toEqual('12');
+  });
+
 });
