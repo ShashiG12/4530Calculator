@@ -1,4 +1,3 @@
-
 import { ActionKeys } from '../enums/action-keys.enum';
 import { NumericKeys } from '../enums/numeric-keys.enum';
 import { OperatorKeys } from '../enums/operator-keys.enum';
@@ -25,46 +24,63 @@ export class CalculatorModel implements ICalculatorModel {
         this._buffer = '.';
         break;
       case ActionKeys.EQUALS:
-        // let currentTotal : number = 0;
-        // let index : number = 0
-        // let firstNum : string = ''
-        // let secondNum : string = ''
-        // let operator : string = ''
-        // while (this._buffer[index]) {
-        //   if (index == 0) {
-        //     while (!isNaN(Number(this._buffer[index]))) {
-        //       firstNum += this._buffer[index]
-        //       index++
-        //     }
-        //   }
-        //   else {
-        //     firstNum = String(currentTotal)
-        //   }
-        //   operator = this._buffer[index]
-        //   index++
-        //   while (!isNaN(Number(this._buffer[index]))) {
-        //     secondNum += this._buffer[index]
-        //     index++
-        //   }
-        //   console.log(this._buffer[index])
-        //   switch (operator) {
-        //     case '+':
-        //       currentTotal += parseInt(firstNum) + parseInt(secondNum)
-        //       break;
-        //     case '-':
-        //       currentTotal += parseInt(firstNum) - parseInt(secondNum)
-        //       break;
-        //     case '*':
-        //       currentTotal += parseInt(firstNum) * parseInt(secondNum)
-        //       break;
-        //     case '/':
-        //       console.log(firstNum, secondNum)
-        //       currentTotal += parseInt(firstNum) / parseInt(secondNum)
-        //       break;
-        //   }
-        // }
-        // this._buffer = String(currentTotal)
-       
+        // uses Shunting yard Algorithm found here:
+        // https://en.wikipedia.org/wiki/Shunting_yard_algorithm#The_algorithm_in_detail 
+        
+        // create list for operators and operands
+        const operators: string[] = [];
+        const operands: number[] = [];
+
+        // iterate through buffer
+        for (let i = 0; i < this._buffer.length; i++) {
+          // intialize current character variable
+          const char = this._buffer[i];
+          // if character is an operator, calculate higher precedence operations
+          // in the lists
+          if (char === '+' || char === '-' || char === '*' || char === '/') {
+            while (operators.length > 0 && this.hasPrecedence(char, operators[operators.length - 1])) {
+              const operator = operators.pop();
+              const secondOperand = operands.pop();
+              const firstOperand = operands.pop();
+              if (operator === '+') {
+                operands.push(firstOperand + secondOperand);
+              } else if (operator === '-') {
+                operands.push(firstOperand - secondOperand);
+              } else if (operator === '*') {
+                operands.push(firstOperand * secondOperand);
+              } else if (operator === '/') {
+                operands.push(firstOperand / secondOperand);
+              }
+            }
+            operators.push(char);
+            // if char is a number, get all the digits and add it to operands
+          } else if (!isNaN(Number(char))) {
+            let currentDigit = char;
+            while (i + 1 < this._buffer.length && !isNaN(Number(this._buffer[i + 1]))) {
+              i++;
+              currentDigit += this._buffer[i];
+            }
+            operands.push(parseFloat(currentDigit));
+          }
+        }
+
+        // evaluate remaining operations and operands
+        while (operators.length > 0) {
+          const operator = operators.pop();
+          const secondOperand = operands.pop();
+          const firstOperand = operands.pop();
+          if (operator === '+') {
+            operands.push(firstOperand + secondOperand);
+          } else if (operator === '-') {
+            operands.push(firstOperand - secondOperand);
+          } else if (operator === '*') {
+            operands.push(firstOperand * secondOperand);
+          } else if (operator === '/') {
+            operands.push(firstOperand / secondOperand);
+          }
+        }
+        this._buffer = String(operands[0])
+        break;
       default:
         break;
     }
@@ -74,31 +90,17 @@ export class CalculatorModel implements ICalculatorModel {
     return this._buffer;
   }
 
+  // determine if operator has precedence over another
   private hasPrecedence(op1: string, op2: string): boolean {
-    const precedenceMap: { [key: string]: number } = {
+    // use a dict to map values to each operator to determine
+    // precedence
+    const precedenceDict: { [key: string]: number } = {
       '+': 1,
       '-': 1,
       '*': 2,
       '/': 2,
     };
-    return precedenceMap[op1] <= precedenceMap[op2];
-  }
-
-  private operation(num1: String, operator: String, num2: String): String {
-    const first: number  = Number(num1);
-    const second: number = Number(num2);
-    switch (operator) {
-      case '+':
-        return String(first + second);
-      case '-':
-        return String(first - second);
-      case '*':
-        return String(first * second);
-      case '/':
-        return String(first / second);
-      default:
-        break;
-    }
+    return precedenceDict[op1] <= precedenceDict[op2];
   }
 
 }
