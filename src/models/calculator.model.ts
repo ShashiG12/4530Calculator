@@ -18,6 +18,7 @@ export class CalculatorModel implements ICalculatorModel {
 
   public changeState(c: ICalculatorState): void {
     this.state = c;
+    this.display();
   }
 
   public pressNumericKey(key: NumericKeys): void {
