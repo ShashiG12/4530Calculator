@@ -2,10 +2,18 @@ import { ActionKeys } from '../enums/action-keys.enum';
 import { NumericKeys } from '../enums/numeric-keys.enum';
 import { OperatorKeys } from '../enums/operator-keys.enum';
 import { ICalculatorModel } from '../interfaces/calculator-model.interface';
+import { CalcAction } from '../calc-states/CalcAction';
+import { CalcNumber } from '../calc-states/CalcAction';
+import { CalcOperator } from '../calc-states/CalcAction';
 
 export class CalculatorModel implements ICalculatorModel {
 
   private _buffer: string = '';
+  private state: ICalculatorState;
+  
+  public constructor() {
+    this.state = CalcAction.instance(this);
+  }
 
   public pressNumericKey(key: NumericKeys): void {
     this._buffer += key;
@@ -25,8 +33,8 @@ export class CalculatorModel implements ICalculatorModel {
         break;
       case ActionKeys.EQUALS:
         // uses Shunting yard Algorithm found here:
-        // https://en.wikipedia.org/wiki/Shunting_yard_algorithm#The_algorithm_in_detail 
-        
+        // https://en.wikipedia.org/wiki/Shunting_yard_algorithm#The_algorithm_in_detail
+
         // create list for operators and operands
         const operators: string[] = [];
         const operands: number[] = [];
@@ -79,7 +87,7 @@ export class CalculatorModel implements ICalculatorModel {
             operands.push(firstOperand / secondOperand);
           }
         }
-        this._buffer = String(operands[0])
+        this._buffer = String(operands[0]);
         break;
       default:
         break;
@@ -98,7 +106,7 @@ export class CalculatorModel implements ICalculatorModel {
       '+': 1,
       '-': 1,
       '*': 2,
-      '/': 2,
+      '/': 2
     };
     return precedenceDict[op1] <= precedenceDict[op2];
   }
