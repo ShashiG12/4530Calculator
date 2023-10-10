@@ -10,6 +10,10 @@ export class NumberState implements ICalculatorState {
 
   public constructor(private c: CalculatorModel) {}
 
+  public display(): void {
+    this.c.display();
+  }
+
   // adds another number to the buffer
   public pressNumber(key: NumericKeys): void {
     this.c.addChar(key);
@@ -97,8 +101,17 @@ export class NumberState implements ICalculatorState {
     }
   }
 
-  public display(): void {
-    this.c.display();
+  // determine if operator has precedence over another
+  private hasPrecedence(op1: string, op2: string): boolean {
+    // use a dict to map values to each operator to determine
+    // precedence
+    const precedenceDict: { [key: string]: number } = {
+      '+': 1,
+      '-': 1,
+      '*': 2,
+      '/': 2
+    };
+    return precedenceDict[op1] <= precedenceDict[op2];
   }
 
 }

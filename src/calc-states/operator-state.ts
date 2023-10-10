@@ -4,6 +4,7 @@ import { NumericKeys } from '../enums/numeric-keys.enum';
 import { OperatorKeys } from '../enums/operator-keys.enum';
 import { ICalculatorState } from '../interfaces/calculator-state-interface';
 import { ActionState } from './action-state';
+import { NumberState } from './number-state';
 
 export class OperatorState implements ICalculatorState {
 

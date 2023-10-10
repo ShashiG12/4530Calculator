@@ -3,6 +3,8 @@ import { ActionKeys } from '../enums/action-keys.enum';
 import { NumericKeys } from '../enums/numeric-keys.enum';
 import { OperatorKeys } from '../enums/operator-keys.enum';
 import { ICalculatorState } from '../interfaces/calculator-state-interface';
+import { NumberState } from './number-state';
+import { OperatorState } from './operator-state';
 
 export class ActionState implements ICalculatorState {
 
@@ -14,8 +16,11 @@ export class ActionState implements ICalculatorState {
     this.c.changeState(new NumberState(this.c));
   }
 
-  // no need to add another operator to the actionkey because '. +' or '+' makes no sense
-  public pressOperator(key: OperatorKeys): void {}
+  // adds an operator to the buffer
+  public pressOperator(key: OperatorKeys): void {
+    this.c.addChar(key);
+    this.c.changeState(new OperatorState(this.c));
+  }
 
   // does clear and '.' but not = equals because '1 = =' or '=' or '1. =' doesn't make sense
   public pressAction(key: ActionKeys): void {
