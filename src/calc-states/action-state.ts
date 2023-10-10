@@ -1,28 +1,35 @@
-import { ICalculatorModel } from '../interfaces/calculator-model.interface';
+/* eslint-disable complexity */
+import { ActionKeys } from '../enums/action-keys.enum';
+import { NumericKeys } from '../enums/numeric-keys.enum';
+import { OperatorKeys } from '../enums/operator-keys.enum';
 import { ICalculatorState } from '../interfaces/calculator-state-interface';
 
 export class ActionState implements ICalculatorState {
-  private static theInstance: ActionState;
 
-  private constructor(private c: ICalculatorModel) {}
+  public constructor(private c: CalculatorModel) {}
 
-  public static instance(c: ICalculatorModel): ActionState {
-    if (ActionState.theInstance === undefined) {
-      ActionState.theInstance = new ActionState(c);
+  // adds another number to the buffer
+  public pressNumber(key: NumericKeys): void {
+    this.c.addChar(key);
+    this.c.changeState(new NumberState(this.c));
+  }
+
+  // no need to add another operator to the actionkey because '. +' or '+' makes no sense
+  public pressOperator(key: OperatorKeys): void {}
+
+  // does clear and '.' but not = equals because '1 = =' or '=' or '1. =' doesn't make sense
+  public pressAction(key: ActionKeys): void {
+    switch (key) {
+      case ActionKeys.CLEAR:
+        this.c.clear(); // stays in same state
+        break;
+      case ActionKeys.DOT:
+        this.c.addChar('.');
+        break;
+      default:
+        break;
     }
-    this.c = c;
-    return ActionState.theInstance;
   }
-
-  public pressNumber(): void {
-    this.c.changeState(NumberState.instance(this.c));
-  }
-
-  public pressOperator(): void {
-    this.c.changeState(OperatorState.instance(this.c));
-  }
-
-  public pressAction(): void {}
 
   public display(): void {
     this.c.display();

@@ -14,7 +14,7 @@ export class CalculatorModel implements ICalculatorModel {
   private state: ICalculatorState;
 
   public constructor() {
-    this.state = ActionState.instance(this);
+    this.state = new ActionState(this);
   }
 
   public changeState(s: ICalculatorState): void {
@@ -44,7 +44,7 @@ export class CalculatorModel implements ICalculatorModel {
         this._buffer = '';
         break;
       case ActionKeys.DOT:
-        this._buffer = '.';
+        this._buffer += '.';
         break;
       case ActionKeys.EQUALS:
         // uses Shunting yard Algorithm found here:
