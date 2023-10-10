@@ -2,17 +2,22 @@ import { ActionKeys } from '../enums/action-keys.enum';
 import { NumericKeys } from '../enums/numeric-keys.enum';
 import { OperatorKeys } from '../enums/operator-keys.enum';
 import { ICalculatorModel } from '../interfaces/calculator-model.interface';
-import { CalcAction } from '../calc-states/CalcAction';
-import { CalcNumber } from '../calc-states/CalcAction';
-import { CalcOperator } from '../calc-states/CalcAction';
+import { CalcAction } from '../calc-states/action-state';
+import { CalcNumber } from '../calc-states/action-state';
+import { CalcOperator } from '../calc-states/action-state';
+import { ICalculatorState } from '../interfaces/calculator-state-interface';
 
 export class CalculatorModel implements ICalculatorModel {
 
   private _buffer: string = '';
   private state: ICalculatorState;
-  
+
   public constructor() {
     this.state = CalcAction.instance(this);
+  }
+
+  public changeState(c: ICalculatorState): void {
+    this.state = c;
   }
 
   public pressNumericKey(key: NumericKeys): void {
