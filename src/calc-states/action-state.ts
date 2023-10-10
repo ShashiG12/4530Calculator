@@ -10,18 +10,19 @@ export class ActionState implements ICalculatorState {
     if (ActionState.theInstance === undefined) {
       ActionState.theInstance = new ActionState(c);
     }
+    this.c = c;
     return ActionState.theInstance;
   }
 
-  public addNumber(): void {
+  public pressNumber(): void {
     this.c.changeState(NumberState.instance(this.c));
   }
 
-  public addOperator(): void {
+  public pressOperator(): void {
     this.c.changeState(OperatorState.instance(this.c));
   }
 
-  public addAction(): void {}
+  public pressAction(): void {}
 
   public display(): void {
     this.c.display();

@@ -1,8 +1,9 @@
+/* eslint-disable complexity */
 import { ActionKeys } from '../enums/action-keys.enum';
 import { NumericKeys } from '../enums/numeric-keys.enum';
 import { OperatorKeys } from '../enums/operator-keys.enum';
 import { ICalculatorModel } from '../interfaces/calculator-model.interface';
-import { CalcAction } from '../calc-states/action-state';
+import { ActionState, CalcAction } from '../calc-states/action-state';
 import { CalcNumber } from '../calc-states/action-state';
 import { CalcOperator } from '../calc-states/action-state';
 import { ICalculatorState } from '../interfaces/calculator-state-interface';
@@ -13,12 +14,20 @@ export class CalculatorModel implements ICalculatorModel {
   private state: ICalculatorState;
 
   public constructor() {
-    this.state = CalcAction.instance(this);
+    this.state = ActionState.instance(this);
   }
 
-  public changeState(c: ICalculatorState): void {
-    this.state = c;
+  public changeState(s: ICalculatorState): void {
+    this.state = s;
     this.display();
+  }
+
+  public addChar(s: string): void {
+    this._buffer += s;
+  }
+
+  public clear(): void {
+    this._buffer = '';
   }
 
   public pressNumericKey(key: NumericKeys): void {

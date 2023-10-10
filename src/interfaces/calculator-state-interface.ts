@@ -1,6 +1,6 @@
 export interface ICalculatorState {
-  addNumber(c: ICalculatorModel): void;
-  addOperator(c: ICalculatorModel): void;
-  addAction(c: ICalculatorModel): void;
+  pressNumber(c: ICalculatorModel): void;
+  pressOperator(c: ICalculatorModel): void;
+  pressAction(c: ICalculatorModel): void;
   display(): void;
 }
